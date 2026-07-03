@@ -1,4 +1,11 @@
 function vacation(people, groupType, dayOfWeek) {
+
+    // const requestInfo = {
+    //     groupType: "Students",
+    //     peopleInGroup: 30,
+    //     dayOfWeek: "Sunday",
+    //     singlePersonPrice: 10.46
+    // }
     
     let totalGroupPrice = 0
 
@@ -10,6 +17,7 @@ function vacation(people, groupType, dayOfWeek) {
                 totalGroupPrice = people * 9.80
             } else if (dayOfWeek === `Sunday`) {
                 totalGroupPrice = people * 10.46
+                //totalGroupPrice = requestInfo.peopleInGroup * requestInfo.singlePersonPrice
             }
 
             if (people >= 30) {
