@@ -1,0 +1,18 @@
+function pascalCaseSplitter(text){
+    let words = [];
+    let current = text[0]
+
+    for (let i = 1; i < text.length; i++) {
+        if (text[i] === text[i].toUpperCase() && text[i] !== text[i].toLowerCase()) {
+            words.push(current);
+            current = text[i];            
+        } else {
+            current += text[i]
+        }        
+    }
+
+    words.push(current);
+
+    console.log(words.join(`, `));
+}
+pascalCaseSplitter('SplitMeIfYouCanHaHaYouCantOrYouCan')
