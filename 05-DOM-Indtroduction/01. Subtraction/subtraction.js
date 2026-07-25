@@ -1,3 +1,8 @@
 function subtract() {
-    //TODO
+    const firstNumber = document.getElementById(`firstNumber`).value 
+    const secondNumber = document.getElementById(`secondNumber`).value
+    const finalResult = Number(firstNumber) - Number(secondNumber)
+
+    document.getElementById(`result`).textContent = finalResult
+
 }
