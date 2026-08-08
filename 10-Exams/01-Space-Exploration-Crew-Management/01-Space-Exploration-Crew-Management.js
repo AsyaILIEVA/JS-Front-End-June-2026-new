@@ -2,16 +2,25 @@ function solve(input) {
     let index = 0;
     let n = Number(input[index++]);
 
-    let astronauts = {};
+    let astronauts = {}; //object
     let result = [];
 
     for (let i = 0; i < n; i++) {
         let [name, section, skills] = input[index++].split(" ");
+// index++ means:
+// Use the current value of index, then increase it by 1.
+// input[index] /input = 1
+// index++;     /input = 2
+// JavaScript assigns the values based on their positions:
+// name     → "John"
+// section  → "A1"
+// skills   → "Java,Python,C++"
 
         astronauts[name] = {
             section: section,
             skills: new Set(skills.split(","))
         };
+        //A Set is a collection that doesn't allow duplicate values.
     }
 
     while (input[index] !== "End") {
