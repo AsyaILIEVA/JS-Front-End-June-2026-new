@@ -60,6 +60,8 @@ function solve(input) {
                 astronauts[name].skills.add(newSkill);
                 result.push(`${name} has learned a new skill: ${newSkill}.`);
             }
+            // Array → push 
+            // Set   → add 
         }
     }
 
@@ -67,8 +69,11 @@ function solve(input) {
         let skills = Array.from(astronauts[name].skills)
             .sort()
             .join(", ");
-
-        result.push(
+            // Go through every property/key in the astronauts object. 
+            // Array.from() converts the Set into an array, so we can use join, sort.. 
+            // Take the astronaut's Set of skills → convert it to an array → sort it alphabetically → turn it into a comma-separated string.
+        
+            result.push(
             `Astronaut: ${name}, Section: ${astronauts[name].section}, Skills: ${skills}`
         );
     }
