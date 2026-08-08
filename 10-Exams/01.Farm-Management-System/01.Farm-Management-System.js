@@ -50,7 +50,11 @@ function farmManager(input) {
 
   
   for (let [name, info] of Object.entries(farmers)) {
-    let tasks = info.tasks.length > 0 ? info.tasks.slice().sort().join(", ") : "";
+    //JavaScript converts the object into an array of key-value pairs
+    let tasks = info.tasks.length > 0 
+        ? info.tasks.slice().sort().join(", ") 
+        : "";
+        // Make a copy → sort it → turn it into a comma-separated string
     console.log(`Farmer: ${name}, Area: ${info.area}, Tasks: ${tasks}`);
   }
 }
