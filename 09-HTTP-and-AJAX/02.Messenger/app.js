@@ -1,71 +1,113 @@
 function attachEvents() {
-    document.getElementById(`submit`).addEventListener(`click`, addComment)
-    document.getElementById(`refresh`).addEventListener(`click`, displayAllComments)
+    // document.getElementById(`submit`).addEventListener(`click`, addComment)
+    // document.getElementById(`refresh`).addEventListener(`click`, displayAllComments)
 
-}
+    
+const URL = "http://localhost:3030/jsonstore/messenger";
 
-const URL = `http://localhost:3030/jsonstore/messenger`
+const messages = document.getElementById("messages");
+const authorName = document.querySelector('input[name="author"]');
+const msgText = document.querySelector('input[name="content"]');
 
-async function addComment() {
+const sendBtn = document.getElementById("submit");
+const refreshBtn = document.getElementById("refresh");
 
-    const authorName = document.querySelector(`[name = "author"]`)
-    const msgText = document.querySelector(`[name = "content]`)
-
-    if (!(authorName.value) || !(msgText.value)) {
-        return
-    }
+sendBtn.addEventListener("click", () => {
+    const message = {
+        author: authorName.value,
+        content: msgText.value
+    };
 
     fetch(URL, {
-        method: `POST`,
+        method: "POST",
         headers: {
-    "Content-type": "application/json"
+            "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            author: authorName.value.trim(),
-            content: msgText.value.trim(),
-        })
-    }).then(res => {
-        return res.json()
-    }).catch(err => {
-        alert(err)
-    })
-    
-    authorName.value = ``
-    msgText.value = ``
-}
+        body: JSON.stringify(message)
+    });
 
-function displayAllComments() {
-    
-    //Send a request → get the response → convert it to JSON → use the data → handle errors:
-    
-    fetch(URL) //fetch() sends an HTTP request to the URL.
-    //fetch() returns a Promise.
-    //You don't get the actual data immediately because the browser needs to wait for the server to respond.
-    
-    .then(res => {
-        return res.json()
-    })
-    //Once the server responds, .then() runs.
-    //The res is the response object.
-    //When I get the response, convert it to JSON and pass(return) that JSON to the next step.
+    authorName.value = "";
+    msgText.value = "";
+});
 
-    .then(attachComments)
-    //.then(comments => {
-    //attachComments(comments);
-    //})
-    //This function probably takes the comments and displays them on the page.
-    
-    .catch(e => alert(e))
+refreshBtn.addEventListener("click", () => {
+    fetch(URL)
+        .then(res => res.json())
+        .then(data => {
+            const allMessages = Object.values(data);
+
+            messages.value = allMessages
+                .map(message => `${message.author}: ${message.content}`)
+                .join("\n");
+        });
+});
+
+
 
 }
 
-function attachComments(data) {
-    const textArea = document.getElementById(`messages`)
-    const allComments = []
+// const URL = `http://localhost:3030/jsonstore/messenger`
 
-    Object.values(data).forEach(c => allComments.push(`${c.author}: ${c.content}`))
+// async function addComment() {
 
-    textArea.value = allComments.join(`\n`)
-}
+//     const authorName = document.querySelector(`[name = "author"]`)
+//     const msgText = document.querySelector(`[name = "content]`)
+
+//     if (!(authorName.value) || !(msgText.value)) {
+//         return
+//     }
+
+//     fetch(URL, {
+//         method: `POST`,
+//         headers: {
+//     "Content-type": "application/json"
+//         },
+//         body: JSON.stringify({
+//             author: authorName.value.trim(),
+//             content: msgText.value.trim(),
+//         })
+//     }).then(res => {
+//         return res.json()
+//     }).catch(err => {
+//         alert(err)
+//     })
+    
+//     authorName.value = ``
+//     msgText.value = ``
+// }
+
+// function displayAllComments() {
+    
+//     //Send a request → get the response → convert it to JSON → use the data → handle errors:
+    
+//     fetch(URL) //fetch() sends an HTTP request to the URL.
+//     //fetch() returns a Promise.
+//     //You don't get the actual data immediately because the browser needs to wait for the server to respond.
+    
+//     .then(res => {
+//         return res.json()
+//     })
+//     //Once the server responds, .then() runs.
+//     //The res is the response object.
+//     //When I get the response, convert it to JSON and pass(return) that JSON to the next step.
+
+//     .then(attachComments)
+//     //.then(comments => {
+//     //attachComments(comments);
+//     //})
+//     //This function probably takes the comments and displays them on the page.
+    
+//     .catch(e => alert(e))
+
+// }
+
+// function attachComments(data) {
+//     const textArea = document.getElementById(`messages`)
+//     const allComments = []
+
+//     Object.values(data).forEach(c => allComments.push(`${c.author}: ${c.content}`))
+
+//     textArea.value = allComments.join(`\n`)
+// }
 
 attachEvents();
